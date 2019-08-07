@@ -1,7 +1,17 @@
 const trimAndSplit = word => word.trim().split(' ');
+const checkAlphaNumeric = text => {
+  const check = text.match(/\W/g)
+  if(check.length >= 1){
+    return check.filter(letter => !letter.match(/\s/g)).length <= 0;
+  }else {
+    return true;
+  }
+}
 
 const countChars = word => {
-    const orderedWord = word.trim()
+    const orderedWord = word
+    .toLowerCase()
+    .trim()
     .replace(/([0-9]|\s)/g, '')
     .split('')
     .sort()
@@ -25,8 +35,9 @@ const countChars = word => {
 
 const textLength = word => ({
   withSpaces: word.length,
-  withoutSpaces: trimmedAndSplit(word).join('').length
+  withoutSpaces: trimAndSplit(word).join('').length
 })
+
 const checkWords = word => {
   const trimmedAndSplit = trimAndSplit(word);
   return {
@@ -40,9 +51,7 @@ const analyzeWord = async (req, res) => {
   try {
     const text = await req.body.text;
 
-    const match = text.match(/\W/g).filter(letter => !letter.match(/\s/g));
-
-    if(match.length < 1){
+    if(checkAlphaNumeric(text)){
       res.status(200).json({
         status: 'ok',
         data: checkWords(text)
@@ -67,6 +76,7 @@ module.exports = {
   trimAndSplit,
   analyzeWord,
   checkWords,
-  countChars
+  countChars,
+  checkAlphaNumeric
 }
   
