@@ -1,3 +1,5 @@
+const trimAndSplit = word => word.trim().split(' ');
+
 const countChars = word => {
     const orderedWord = word.trim()
     .replace(/([0-9]|\s)/g, '')
@@ -19,20 +21,22 @@ const countChars = word => {
         }
       )
     )
-  };
+};
+
+const textLength = word => ({
+  withSpaces: word.length,
+  withoutSpaces: trimmedAndSplit(word).join('').length
+})
 const checkWords = word => {
-  const trimmedAndSplit = word.trim().split(' ')
+  const trimmedAndSplit = trimAndSplit(word);
   return {
-    textLength: {
-      withSpaces: word.length,
-      withoutSpaces:trimmedAndSplit.join('').length
-    },
+    textLength: textLength(word),
     wordCount: trimmedAndSplit.length,
     characterCount: countChars(word)
   };
 };
 
-module.exports = postWord = async (req, res) => {
+const analyzeWord = async (req, res) => {
   try {
     const text = await req.body.text;
 
@@ -56,5 +60,13 @@ module.exports = postWord = async (req, res) => {
     })
   }
 
+}
+
+module.exports = {
+  textLength,
+  trimAndSplit,
+  analyzeWord,
+  checkWords,
+  countChars
 }
   
