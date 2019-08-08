@@ -4,7 +4,7 @@ const countChars = (word) => {
   const orderedWord = word
     .toLowerCase()
     .trim()
-    .replace(/(\W|\s)/g, '')
+    .replace(/(\W|\s|[0-9])/g, '')
     .split('')
     .sort()
     .join('');
