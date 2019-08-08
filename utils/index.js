@@ -1,19 +1,10 @@
 const trimAndSplit = word => word.trim().split(' ');
 
-const checkAlphaNumeric = (text) => {
-  const check = text.match(/\W/g);
-  if (check.length >= 1) {
-    // check spaces
-    return check.filter(letter => !letter.match(/\s/g)).length <= 0;
-  }
-  return true;
-};
-
 const countChars = (word) => {
   const orderedWord = word
     .toLowerCase()
     .trim()
-    .replace(/([0-9]|\s)/g, '')
+    .replace(/(\W|\s)/g, '')
     .split('')
     .sort()
     .join('');
@@ -26,24 +17,27 @@ const countChars = (word) => {
     }
   });
 
-  return removedDuplicates.map(letter => (
-    {
-      [letter]: orderedWord.match(RegExp(letter, 'g')).length,
-    }
-  ));
+  if (word.length > 0) {
+    return removedDuplicates.map(letter => (
+      {
+        [letter]: orderedWord.match(RegExp(letter, 'g')).length,
+      }
+    ));
+  }
+  return [];
 };
 
 const textLength = word => ({
-  withSpaces: word.length,
-  withoutSpaces: trimAndSplit(word).join('').length,
+  withSpaces: word.length > 0 ? word.length : 0,
+  withoutSpaces: word.length > 0 ? trimAndSplit(word).join('').length : 0,
 });
 
 const checkWords = (word) => {
   const trimmedAndSplit = trimAndSplit(word);
-  
+
   return {
     textLength: textLength(word),
-    wordCount: trimmedAndSplit.length,
+    wordCount: word.length > 0 ? trimmedAndSplit.length : 0,
     characterCount: countChars(word),
   };
 };
@@ -53,5 +47,4 @@ module.exports = {
   trimAndSplit,
   checkWords,
   countChars,
-  checkAlphaNumeric,
 };
