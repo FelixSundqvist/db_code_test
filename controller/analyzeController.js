@@ -3,13 +3,8 @@ const { checkWords } = require('../utils');
 const analyzeWord = async (req, res) => {
   try {
     const text = await req.body.text;
-    const testName = await req.body.testName;
 
-    res.status(200).json({
-      testName,
-      text,
-      expectedResult: checkWords(text),
-    });
+    res.status(200).json(checkWords(text));
 
   } catch (error) {
     res.status(400).json({

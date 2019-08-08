@@ -34,7 +34,6 @@ const textLength = word => ({
 
 const checkWords = (word) => {
   const trimmedAndSplit = trimAndSplit(word);
-
   return {
     textLength: textLength(word),
     wordCount: word.length > 0 ? trimmedAndSplit.length : 0,
