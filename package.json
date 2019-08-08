@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "homepage": "https://word-analyzer-db.herokuapp.com/",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "jest"
   },
   "keywords": [],
